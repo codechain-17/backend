@@ -19,9 +19,7 @@ export class AnswerController {
 
     addAnswer = async (req, res) => {
         try {
-            const { category } = req.params;
-            const { questions } = req.body;
-            const answer = await this.answerDao.addAnswer(category, questions);
+            const answer = await this.answerDao.addAnswer(req.body);
             res.status(200).json(answer);
         } catch (err) {
             res.status(500).json(err.message);

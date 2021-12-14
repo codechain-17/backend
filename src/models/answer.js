@@ -6,11 +6,13 @@ const questionSchema = mongoose.Schema({
 
 const quizSchema = new mongoose.Schema({
     id: Number,
+    category: String,
+    date: Date,
     alternatives: [questionSchema],
 });
 
 const answerSchema = mongoose.Schema({
-    userId: Number,
+    userId: String,
     quizes: [quizSchema],
 });
 

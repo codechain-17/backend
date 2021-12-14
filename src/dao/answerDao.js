@@ -1,6 +1,6 @@
 import { Answer } from "../models/Answer.js";
 import { mongoToObject } from '../utils/index.js'
-
+import moment from 'moment'
 export class AnswerDao {
     constructor() {
 
@@ -28,27 +28,30 @@ export class AnswerDao {
         }
     }
 
-    async addAnswer(userId, category, questions) {
-        const existedCategory = await this.getAnswer(category);
+    async addAnswer(answer) {
+        const userId = answer.userId;
+        const quizes = answer.quizes
+        const existedCategory = await this.getAnswer({ userId: userId });
         if (existedCategory.length) {
-            const cantAdd = existedCategory[0].questions.length;
-            const newQuestions = questions.map((question, index) => {
+            const cantAdd = existedCategory[0].quizes.length;
+            const newQuizes = quizes.map((quiz, index) => {
                 return {
+                    date: moment().format('YYYY-MM-DD HH:mm:ss'),
                     id: index + cantAdd,
-                    question: question.question,
-                    alternatives: question.alternatives.map((alternative, index) => {
+                    category: quiz.category,
+                    alternatives: quiz.alternatives.map((alternative, index) => {
                         return {
                             id: index,
-                            text: alternative.text,
-                            isCorrect: alternative.isCorrect
+                            answer: alternative.answer,
                         }
                     })
                 }
             })
-            return await Answer.updateOne({ category: category }, { $push: { questions: newQuestions } });
+            return await Answer.updateOne({ userId: userId }, { $push: { quizes: newQuizes } });
         } else {
-            throw new Error('Answer does not exists');
+            return await Answer.create(answer);
         }
     }
+
 }
 
