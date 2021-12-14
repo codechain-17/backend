@@ -1,14 +1,21 @@
 import mongoose from 'mongoose';
-const questionSchema = mongoose.Schema({
+
+const alternativeSchema = mongoose.Schema({
     id: Number,
     answer: Boolean,
+})
+
+const questionSchema = mongoose.Schema({
+    id: Number,
+    alternatives: [alternativeSchema],
 })
 
 const quizSchema = new mongoose.Schema({
     id: Number,
     category: String,
     date: Date,
-    alternatives: [questionSchema],
+    score: Number,
+    questions: [questionSchema],
 });
 
 const answerSchema = mongoose.Schema({
