@@ -14,7 +14,7 @@ export class ApiRouter {
 
     start() {
 
-        this.router.post();
+        //this.router.post();
         return this.router;
     }
 }

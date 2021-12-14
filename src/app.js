@@ -16,7 +16,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./src/public'));
-const apiRouter = new ApiRouter);
+const apiRouter = new ApiRouter();
 app.use('/api', apiRouter.start());
 
 
