@@ -14,7 +14,6 @@ export class ApiRouter {
         this.router.get('/quiz/:category', this.quizController.getQuiz);
         this.router.post('/quiz/create', this.quizController.createQuiz);
         this.router.post('/quiz/:category/addquestions', this.quizController.addQuestion);
-        this.router.post('/answer/calculate', this.answerController.calculateScore);
         this.router.post('/answer/add', this.answerController.addAnswer);
 
         return this.router;

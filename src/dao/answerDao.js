@@ -13,34 +13,9 @@ export class AnswerDao {
         return mongoToObject(res);
     }
 
-    async calculateScore(answer) {
-        //Obtain existedQuiz
-        let score = 0;
-
-        try {
-            const existedQuiz = await this.quizDao.getQuiz(answer.category);
-            if (existedQuiz.length) {
-                const { questions } = existedQuiz[0];
-                score = await questions.reduce((acc, question) => {
-                    const { alternatives } = question;
-                    const answerQuestion = answer.questions.find(q => q.id === question.id);
-                    if (answerQuestion) {
-                        answerQuestion.alternatives.forEach(answeredAlternative => {
-                            const correctAlternative = alternatives.find(a => a.id === answeredAlternative.id);
-                            if (correctAlternative) {
-                                if ((correctAlternative.isCorrect === answeredAlternative.answer) && correctAlternative.isCorrect) {
-                                    acc += 1;
-                                }
-                            }
-                        })
-                    }
-                }, 0)
-            }
-        } catch (err) {
-            throw new Error("Error calculating score");;
-        }
-
-        return score;
+    async getQuiz(category) {
+        const res = await this.quizDao.getQuiz(category);
+        return mongoToObject(res);
     }
 
     async addAnswer(answer) {
@@ -48,29 +23,50 @@ export class AnswerDao {
         const quizes = answer.quizes
         const existedAnswer = await this.getAnswer({ userId: userId });
         const quantityAdd = existedAnswer.length ? existedAnswer[0].quizes.length : 0;
-        const newQuizes = this.getNewQuizes(quizes, quantityAdd);
+        const newQuizes = await this.getNewQuizes(quizes, quantityAdd);
 
         if (existedAnswer.length) {
             await Answer.updateOne({ userId: userId }, { $push: { quizes: newQuizes } });
         } else {
             const newAnswer = { userId: userId, quizes: newQuizes }
-            return await Answer.create(newAnswer);
+            await Answer.create(newAnswer);
         }
-        return newQuizes.score;
+        const res = {
+            totalQuestion: newQuizes[0].questions.length,
+            score: newQuizes[0].score,
+        }
+        return res
     }
 
-    getNewQuizes(quizes, cantAdd) {
-        return quizes.map((quiz, index) => {
-            // const score = await this.calculateScore(quiz);
-            const score = 0;
-            return {
-                date: moment().format('YYYY-MM-DD HH:mm:ss'),
-                id: index + cantAdd,
-                category: quiz.category,
-                score: score,
-                questions: quiz.questions,
-            }
-        })
+    async getNewQuizes(quizes, cantAdd) {
+
+        const existedQuiz = await this.getQuiz(quizes[0].category);
+        let score;
+
+        if (existedQuiz.length) {
+            return quizes.map((quiz, index) => {
+                score = 0;
+                quiz.questions.forEach((question, index) => {
+                    question.alternatives.forEach((alternative, index) => {
+                        let answer = existedQuiz[0].questions.find(q => q.id === question.id).alternatives.find(a => a.id === alternative.id);
+                        if (answer) {
+                            score += (alternative.answer === answer.isCorrect) && answer.isCorrect ? 1 : 0;
+                        }
+                    })
+                })
+
+                return {
+                    date: moment().format('YYYY-MM-DD HH:mm:ss'),
+                    id: index + cantAdd,
+                    category: quiz.category,
+                    score: score,
+                    questions: quiz.questions,
+                }
+            })
+        } else {
+            throw new Error('Quiz does not exists');
+        }
+
     }
 
 }

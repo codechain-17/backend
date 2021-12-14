@@ -6,9 +6,24 @@ export class QuizDao {
 
     }
 
+    async getAnswer(category, question, alternative) {
+        try {
+            const res = await this.getQuiz(category);
+            if (res.length) {
+                const questionId = res[0].questions.findIndex(q => q.question === question);
+                const alternativeId = res[0].questions[questionId].alternatives.findIndex(a => a.text === alternative);
+                return res[0].questions[questionId].alternatives[alternativeId].answer;
+            } else {
+                throw new Error('Quiz does not exists');
+            }
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
     async getQuiz(category) {
         const res = await Quiz.findOne({ category: category });
-        return mongoToObject(res);
+        return res;
     }
 
     async createQuiz(category) {
