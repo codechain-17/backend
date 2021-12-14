@@ -22,13 +22,14 @@ export class QuizDao {
     }
 
     async getQuiz(category) {
-        const res = await Quiz.findOne({ category: category });
+        const res = await Quiz.findOne({ category: category }).select('-questions.alternatives.isCorrect');
+
         return res;
     }
 
     async createQuiz(category) {
         const existedCategory = await this.getQuiz(category);
-        if (!existedCategory.length) {
+        if (!existedCategory) {
             return await Quiz.create({ category: category });
         } else {
             throw new Error('Quiz already exists');
@@ -36,8 +37,9 @@ export class QuizDao {
     }
 
     async addQuestion(category, questions) {
-        const existedCategory = await this.getQuiz(category);
-        if (existedCategory.length) {
+        const res = await this.getQuiz(category);
+        const existedCategory = mongoToObject(res);
+        if (existedCategory) {
             const cantAdd = existedCategory[0].questions.length;
             const newQuestions = questions.map((question, index) => {
                 return {
