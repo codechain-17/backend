@@ -28,13 +28,19 @@ export class QuizDao {
                 return {
                     id: index + cantAdd,
                     question: question.question,
-                    detail: question.detail
+                    alternatives: question.alternatives.map((alternative, index) => {
+                        return {
+                            id: index,
+                            text: alternative.text,
+                            isCorrect: alternative.isCorrect
+                        }
+                    })
                 }
-            });
+            })
             return await Quiz.updateOne({ category: category }, { $push: { questions: newQuestions } });
         } else {
             throw new Error('Quiz does not exists');
         }
     }
-
 }
+
