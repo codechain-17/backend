@@ -1,0 +1,36 @@
+.pillCard {
+    background-color: #f4f4f4;
+    border-radius: 2rem;
+    .icon-big {
+        font-size: 3rem;
+        .notif {
+            position: absolute;
+            min-width: 25px;
+            border-radius: 5rem;
+            font-size: 1rem;
+            background-color: $rosa;
+            color: #fff;
+        }
+    }
+    .numbers {
+        text-align: right;
+        p {
+            font-size: 1rem;
+            margin: 0;
+        }
+    }
+      
+    .footer {
+        padding: 0;
+        line-height: 30px;
+    }
+      
+}
+ 
+@media (max-width: 767.98px) {
+    .sidebar-item.active, .sidebar-item:hover {
+      border-right: 1px solid #e6e7e9;
+      margin-left: 0.25rem;
+      margin-right: 0.25rem;
+    }
+}

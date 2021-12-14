@@ -1,0 +1,21 @@
+.li_menu_item a {
+    color: $verde-verde !important;
+    font-weight: bold;
+    font-size: 1rem;
+    
+    &:hover {
+        background-color: rgba(177, 230, 184, 0.315);
+        border-radius: 3px;
+        border: none;
+    
+    }
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.logo {
+    width: 30%;
+}

@@ -1,0 +1,15 @@
+@import "~bootstrap/scss/bootstrap";
+@import './themes.scss';
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+
+@import '../components/Header/header';
+@import '../components/Navbar/navbar';
+@import '../components/Sections/FeaturesSection/features';
+@import '../components/Sections/SocialMedias/socialmedia';
+@import '../components/Cards/cards';
+@import '../components/Sidebar/sidebar';
+@import '../components/UserProfile/userProfile';
+
+* {
+    font-family: 'Lato', sans-serif;
+}

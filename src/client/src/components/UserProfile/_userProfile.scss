@@ -1,0 +1,16 @@
+/*------------------------------------
+    Dashboard
+------------------------------------*/
+
+.profile {
+    background-color: $btn-verde;
+    &__avatarImage {
+        background-color: $white;
+        width: 8rem;
+        height: 8rem;
+    }
+    &__link {
+        text-decoration: none;
+        color: $black;
+    }
+}
