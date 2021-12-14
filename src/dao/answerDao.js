@@ -1,4 +1,4 @@
-import { Answer } from "../models/Answer.js";
+import { Answer } from "../models/answer.js";
 import { QuizDao } from "./quizDao.js";
 import { mongoToObject } from '../utils/index.js'
 import moment from 'moment'
