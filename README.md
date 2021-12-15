@@ -1,8 +1,8 @@
 # Get On Board Junior
-
 ## Filtramos tu primer empleo tecnológico
 
-Una nueva iniciativa de Get on Board, donde podrás postular a trabajos seleccionados de todo el mundo, poniendo a prueba tus habilidades.
+Como equipo nos dimos cuenta que hay una tremenda oportunidad poco cubierta para personas sin experiencia en el mundo de la tecnología. Muchos de ellos vienen de bootcamps, como nosotros, y tienen temores en el comienzo de su primeras labores. Por otro lado las organizaciones tienen temor de incorporarlos, dado el conocimiento que puedan tener. Adicionalmente desde getonboard es no resulta simple aplicar si se es nuevo. 
+Nuestra solución pretende ser el vínculo entre ambos mundos.
 
 - Elige la categoría en la que destacas.
 - Busca un empleo y visualiza sus detalles.
@@ -14,19 +14,18 @@ Una nueva iniciativa de Get on Board, donde podrás postular a trabajos seleccio
 Este proyecto forma parte de la edición 2021 de Awesome Fest.
 
 #### Integrantes:
+- [Valeria Silveira](https://github.com/valessol)
+- [Martin Miguez](https://github.com/mmiguez77)
+- [Lucas Cueva](https://github.com/lucasMaximilianoCueva)
+- [Rafael Mascayano](https://github.com/nosemiusername)
 
-- [https://github.com/valessol](Valeria Silveira)
-- [https://github.com/mmiguez77](Martin Miguez)
-- [https://github.com/lucasMaximilianoCueva](Lucas Cueva)
-- [https://github.com/nosemiusername](Rafael Mascayano)
-
-#### Repositorios:
-
-- [https://github.com/codechain-17/frontend](Frontend)
-- [https://github.com/codechain-17/backend](Backend)
+#### Repositorios: 
+- [Frontend](https://github.com/codechain-17/frontend)
+- [Backend](https://github.com/codechain-17/backend)
 
 #### Deploy en Heroku
-
 - [https://getonbrdjunior.herokuapp.com/](https://getonbrdjunior.herokuapp.com/)
+- User: luks@gmail.com, Password:1234
 
 #### Video Presentación
+https://www.dropbox.com/s/bltnc6eqtw0bmf4/getonbrdjunior.mov?dl=0
