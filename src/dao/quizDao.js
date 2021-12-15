@@ -22,7 +22,8 @@ export class QuizDao {
     }
 
     async getQuiz(category) {
-        const res = await Quiz.findOne({ category: category }).select('-questions.alternatives.isCorrect');
+        const res = await Quiz.findOne({ category: category },
+            { _id: 0, __v: 0, 'questions.alternatives.isCorrect': 0, category: 0 });
 
         return res;
     }
