@@ -5,6 +5,8 @@ import { getUserController } from '../controllers/userController.js';
 import { loginLocalController } from '../controllers/userController.js';
 import { logoutController } from '../controllers/userController.js';
 import { registerLocalController } from '../controllers/userController.js';
+import { JobController } from '../controllers/jobController.js';
+
 export class ApiRouter {
     constructor() {
         this.router = Router();
@@ -14,9 +16,12 @@ export class ApiRouter {
         this.registerLocalController = registerLocalController;
         this.loginLocalController = loginLocalController;
         this.logoutController = logoutController;
+        this.jobController = new JobController();
     }
 
     start() {
+        this.router.post('/job', this.jobController.getJob);
+        this.router.post('/job/create', this.jobController.addJob);
         this.router.get('/quiz/:category', this.quizController.getQuiz);
         this.router.post('/quiz/create', this.quizController.createQuiz);
         this.router.post('/quiz/:category/addquestions', this.quizController.addQuestion);
