@@ -15,7 +15,7 @@ const quizSchema = new mongoose.Schema({
     category: String,
     date: Date,
     score: Number,
-    questions: [questionSchema],
+    questions: [Number],
 });
 
 const answerSchema = mongoose.Schema({

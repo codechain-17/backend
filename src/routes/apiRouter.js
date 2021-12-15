@@ -20,7 +20,7 @@ export class ApiRouter {
         this.router.get('/quiz/:category', this.quizController.getQuiz);
         this.router.post('/quiz/create', this.quizController.createQuiz);
         this.router.post('/quiz/:category/addquestions', this.quizController.addQuestion);
-        this.router.post('/answer/add', this.answerController.addAnswer);
+        this.router.post('/:version/answer/add', this.answerController.addAnswer);
         this.router.get('/getuser', this.getUserController);
         this.router.get('/logout', this.logoutController);
         this.router.post('/register', this.registerLocalController);

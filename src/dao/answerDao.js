@@ -14,16 +14,16 @@ export class AnswerDao {
     }
 
     async getQuiz(category) {
-        const res = await this.quizDao.getQuiz(category);
+        const res = await this.quizDao.getQuiz(category, 1);
         return mongoToObject(res);
     }
 
-    async addAnswer(answer) {
+    async addAnswer(answer, v = 1) {
         const userId = answer.userId;
         const quizes = answer.quizes
         const existedAnswer = await this.getAnswer({ userId: userId });
         const quantityAdd = existedAnswer.length ? existedAnswer[0].quizes.length : 0;
-        const newQuizes = await this.getNewQuizes(quizes, quantityAdd);
+        const newQuizes = v == 1 ? await this.getNewQuizes(quizes, quantityAdd) : await this.getNewQuizesV2(quizes, quantityAdd);
 
         if (existedAnswer.length) {
             await Answer.updateOne({ userId: userId }, { $push: { quizes: newQuizes } });
@@ -32,11 +32,11 @@ export class AnswerDao {
             await Answer.create(newAnswer);
         }
         const res = {
-            totalQuestion: newQuizes[0].questions.length,
             score: newQuizes[0].score,
         }
         return res
     }
+
 
     async getNewQuizes(quizes, cantAdd) {
 
@@ -67,6 +67,33 @@ export class AnswerDao {
             throw new Error('Quiz does not exists');
         }
 
+    }
+
+    async getNewQuizesV2(quizes, cantAdd) {
+
+        const existedQuiz = await this.getQuiz(quizes[0].category);
+        let score;
+
+        if (existedQuiz.length) {
+            return quizes.map((quiz, index) => {
+                score = 0;
+                quiz.questions.forEach((alternative, index) => {
+                    let answer = existedQuiz[0].questions.find(q => q.id === index).alternatives.find(a => a.id === alternative);
+                    score += answer.isCorrect ? 1 : 0;
+                })
+
+                return {
+                    date: moment().format('YYYY-MM-DD HH:mm:ss'),
+                    id: index + cantAdd,
+                    category: quiz.category,
+                    score: score,
+                    questions: quiz.questions,
+                }
+            })
+
+        } else {
+            throw new Error('Quiz does not exists');
+        }
     }
 
 }

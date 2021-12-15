@@ -21,9 +21,10 @@ export class QuizDao {
         }
     }
 
-    async getQuiz(category) {
+    async getQuiz(category, hideIsCorrect = 1) {
+        const projection = hideIsCorrect ? {} : { _id: 0, __v: 0, 'questions.alternatives.isCorrect': 0, category: 0 };
         const res = await Quiz.findOne({ category: category },
-            { _id: 0, __v: 0, 'questions.alternatives.isCorrect': 0, category: 0 });
+            projection);
 
         return res;
     }
